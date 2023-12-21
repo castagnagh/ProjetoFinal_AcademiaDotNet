@@ -11,17 +11,7 @@ namespace ProjetoFinal.Data
         public DbSet<Procedimento> Procedimentos { get; set; }
         public DbSet<Computador> Computadores { get; set; }
         public DbSet<RegistroManutencao> RegistroManutencoes { get; set; }
-        public Contexto()
-        {
-
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=registroManutencao;User ID=usuarioManutencao;Password=senha123#;");
-            optionsBuilder.UseLazyLoadingProxies();
-        }
-
+        public Contexto(DbContextOptions<Contexto> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

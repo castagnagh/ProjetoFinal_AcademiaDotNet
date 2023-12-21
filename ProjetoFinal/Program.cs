@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProjetoFinal.Data;
+using System.Configuration;
 
 namespace ProjetoFinal
 {
@@ -8,11 +9,12 @@ namespace ProjetoFinal
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<Contexto>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoBanco")));
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 

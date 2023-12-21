@@ -23,6 +23,46 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Procedimentos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VkaW1lbnRvc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Procedimentos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VkaW1lbnRvc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Procedimentos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VkaW1lbnRvc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Procedimentos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VkaW1lbnRvc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Procedimentos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvY2VkaW1lbnRvc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Secoes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vjb2VzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Secoes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vjb2VzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Secoes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vjb2VzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Secoes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vjb2VzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Secoes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vjb2VzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Gabriel Castagna/Documents/Projetos GitHub/ProjetoFinal_AcademiaDotNet/ProjetoFinal/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

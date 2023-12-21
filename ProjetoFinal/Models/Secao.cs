@@ -10,6 +10,6 @@ namespace ProjetoFinal.Models
         [Required(ErrorMessage = "O nome da seção é obrigatório")]
         public string Nome { get; set; }
 
-        public virtual ICollection<Computador> Computadores { get; set;}
+        public virtual ICollection<Computador>? Computadores { get; set;}
     }
 }

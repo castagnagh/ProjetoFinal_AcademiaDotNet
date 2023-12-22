@@ -14,8 +14,8 @@ namespace ProjetoFinal.Models
 
         public int SecaoId { get; set; }
 
-        public virtual Secao Secao { get; set; }
+        public virtual Secao? Secao { get; set; }
 
-        public virtual ICollection<RegistroManutencao> Manutencoes { get; set;}
+        public virtual ICollection<RegistroManutencao>? Manutencoes { get; set;}
     }
 }

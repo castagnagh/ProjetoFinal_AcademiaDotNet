@@ -34,5 +34,9 @@ namespace ProjetoFinal.Data
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
+        public DbSet<ProjetoFinal.Models.Marca>? Marca { get; set; }
+
+        public DbSet<ProjetoFinal.Models.TipoComputador>? TipoComputador { get; set; }
+
     }
 }

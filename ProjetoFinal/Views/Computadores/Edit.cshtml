@@ -1,10 +1,10 @@
 ﻿@model ProjetoFinal.Models.Computador
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Computador";
 }
 
-<h1>Edit</h1>
+<p class="display-6 mt-3">Editar</p>
 
 <h4>Computador</h4>
 <hr />
@@ -14,29 +14,39 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="NumPatrimonio" class="control-label"></label>
+                <label asp-for="NumPatrimonio" class="control-label">Nr Patrimônio</label>
                 <input asp-for="NumPatrimonio" class="form-control" />
                 <span asp-validation-for="NumPatrimonio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
+                <label asp-for="Descricao" class="control-label">Descrição</label>
                 <input asp-for="Descricao" class="form-control" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SecaoId" class="control-label"></label>
+                <label asp-for="SecaoId" class="control-label">Seção</label>
                 <select asp-for="SecaoId" class="form-control" asp-items="ViewBag.SecaoId"></select>
                 <span asp-validation-for="SecaoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="MarcaId" class="control-label">Marca</label>
+                <select asp-for="MarcaId" class="form-control" asp-items="ViewBag.MarcaId"></select>
+                <span asp-validation-for="MarcaId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="TipoComputadorId" class="control-label">Tipo (Modelo)</label>
+                <select asp-for="TipoComputadorId" class="form-control" asp-items="ViewBag.TipoComputadorId"></select>
+                <span asp-validation-for="TipoComputadorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Voltar</a>
+                <input type="submit" value="Salvar" class="btn btn-primary btn-sm" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

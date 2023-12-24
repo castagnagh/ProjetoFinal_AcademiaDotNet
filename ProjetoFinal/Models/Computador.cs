@@ -13,8 +13,14 @@ namespace ProjetoFinal.Models
         public string Descricao { get; set; }
 
         public int SecaoId { get; set; }
+        public int MarcaId { get; set; }
+
+        public int TipoComputadorId { get; set; }
 
         public virtual Secao? Secao { get; set; }
+        public virtual Marca? Marca { get; set; }
+        public virtual TipoComputador? TipoComputador { get; set; }
+
 
         public virtual ICollection<RegistroManutencao>? Manutencoes { get; set;}
     }

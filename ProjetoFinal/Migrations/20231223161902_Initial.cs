@@ -10,12 +10,25 @@ namespace ProjetoFinal.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Marca",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Marca", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Procedimentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +49,19 @@ namespace ProjetoFinal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TipoComputador",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoComputador", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Computadores",
                 columns: table => new
                 {
@@ -43,17 +69,31 @@ namespace ProjetoFinal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumPatrimonio = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    SecaoId = table.Column<int>(type: "int", nullable: false)
+                    SecaoId = table.Column<int>(type: "int", nullable: false),
+                    MarcaId = table.Column<int>(type: "int", nullable: false),
+                    TipoComputadorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Computadores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Computadores_Marca_MarcaId",
+                        column: x => x.MarcaId,
+                        principalTable: "Marca",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Computadores_Secoes_SecaoId",
                         column: x => x.SecaoId,
                         principalTable: "Secoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Computadores_TipoComputador_TipoComputadorId",
+                        column: x => x.TipoComputadorId,
+                        principalTable: "TipoComputador",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,9 +125,19 @@ namespace ProjetoFinal.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Computadores_MarcaId",
+                table: "Computadores",
+                column: "MarcaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Computadores_SecaoId",
                 table: "Computadores",
                 column: "SecaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Computadores_TipoComputadorId",
+                table: "Computadores",
+                column: "TipoComputadorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RegistroManutencoes_ComputadorId",
@@ -112,7 +162,13 @@ namespace ProjetoFinal.Migrations
                 name: "Procedimentos");
 
             migrationBuilder.DropTable(
+                name: "Marca");
+
+            migrationBuilder.DropTable(
                 name: "Secoes");
+
+            migrationBuilder.DropTable(
+                name: "TipoComputador");
         }
     }
 }

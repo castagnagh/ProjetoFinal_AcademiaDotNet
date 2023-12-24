@@ -22,7 +22,7 @@ namespace ProjetoFinal.Controllers
         // GET: Computadores
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.Computadores.Include(c => c.Secao);
+            var contexto = _context.Computadores.Include(c => c.Marca).Include(c => c.Secao).Include(c => c.TipoComputador);
             return View(await contexto.ToListAsync());
         }
 
@@ -35,7 +35,9 @@ namespace ProjetoFinal.Controllers
             }
 
             var computador = await _context.Computadores
+                .Include(c => c.Marca)
                 .Include(c => c.Secao)
+                .Include(c => c.TipoComputador)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (computador == null)
             {
@@ -48,7 +50,9 @@ namespace ProjetoFinal.Controllers
         // GET: Computadores/Create
         public IActionResult Create()
         {
+            ViewData["MarcaId"] = new SelectList(_context.Set<Marca>(), "Id", "Nome");
             ViewData["SecaoId"] = new SelectList(_context.Secoes, "Id", "Nome");
+            ViewData["TipoComputadorId"] = new SelectList(_context.Set<TipoComputador>(), "Id", "Nome");
             return View();
         }
 
@@ -57,7 +61,7 @@ namespace ProjetoFinal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NumPatrimonio,Descricao,SecaoId")] Computador computador)
+        public async Task<IActionResult> Create([Bind("Id,NumPatrimonio,Descricao,SecaoId,MarcaId,TipoComputadorId")] Computador computador)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +69,9 @@ namespace ProjetoFinal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MarcaId"] = new SelectList(_context.Set<Marca>(), "Id", "Nome", computador.MarcaId);
             ViewData["SecaoId"] = new SelectList(_context.Secoes, "Id", "Nome", computador.SecaoId);
+            ViewData["TipoComputadorId"] = new SelectList(_context.Set<TipoComputador>(), "Id", "Nome", computador.TipoComputadorId);
             return View(computador);
         }
 
@@ -82,7 +88,9 @@ namespace ProjetoFinal.Controllers
             {
                 return NotFound();
             }
+            ViewData["MarcaId"] = new SelectList(_context.Set<Marca>(), "Id", "Nome", computador.MarcaId);
             ViewData["SecaoId"] = new SelectList(_context.Secoes, "Id", "Nome", computador.SecaoId);
+            ViewData["TipoComputadorId"] = new SelectList(_context.Set<TipoComputador>(), "Id", "Nome", computador.TipoComputadorId);
             return View(computador);
         }
 
@@ -91,7 +99,7 @@ namespace ProjetoFinal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NumPatrimonio,Descricao,SecaoId")] Computador computador)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NumPatrimonio,Descricao,SecaoId,MarcaId,TipoComputadorId")] Computador computador)
         {
             if (id != computador.Id)
             {
@@ -118,7 +126,9 @@ namespace ProjetoFinal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MarcaId"] = new SelectList(_context.Set<Marca>(), "Id", "Nome", computador.MarcaId);
             ViewData["SecaoId"] = new SelectList(_context.Secoes, "Id", "Nome", computador.SecaoId);
+            ViewData["TipoComputadorId"] = new SelectList(_context.Set<TipoComputador>(), "Id", "Nome", computador.TipoComputadorId);
             return View(computador);
         }
 
@@ -131,7 +141,9 @@ namespace ProjetoFinal.Controllers
             }
 
             var computador = await _context.Computadores
+                .Include(c => c.Marca)
                 .Include(c => c.Secao)
+                .Include(c => c.TipoComputador)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (computador == null)
             {

@@ -1,47 +1,68 @@
 ﻿@model IEnumerable<ProjetoFinal.Models.Computador>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ínicio";
 }
-
-<h1>Index</h1>
-
+<p class="display-6 mt-3">Computadores registrados</p>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success btn-sm mt-3"><i class="bi bi-plus-circle"></i> Adicionar</a>
 </p>
-<table class="table">
+<table id="myTable" class="table table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NumPatrimonio)
+                Nr Patrimônio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                Descrição
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Secao)
+                Seção
             </th>
-            <th></th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumPatrimonio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Secao.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumPatrimonio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Secao.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marca.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoComputador.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i> Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-text"></i> Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        let table = new DataTable('#myTable', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+            },
+        });
+    </script>
+}

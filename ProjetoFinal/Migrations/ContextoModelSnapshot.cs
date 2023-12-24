@@ -35,6 +35,9 @@ namespace ProjetoFinal.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NumPatrimonio")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -43,11 +46,36 @@ namespace ProjetoFinal.Migrations
                     b.Property<int>("SecaoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TipoComputadorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("MarcaId");
 
                     b.HasIndex("SecaoId");
 
+                    b.HasIndex("TipoComputadorId");
+
                     b.ToTable("Computadores");
+                });
+
+            modelBuilder.Entity("ProjetoFinal.Models.Marca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Marca");
                 });
 
             modelBuilder.Entity("ProjetoFinal.Models.Procedimento", b =>
@@ -115,15 +143,49 @@ namespace ProjetoFinal.Migrations
                     b.ToTable("Secoes");
                 });
 
+            modelBuilder.Entity("ProjetoFinal.Models.TipoComputador", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoComputador");
+                });
+
             modelBuilder.Entity("ProjetoFinal.Models.Computador", b =>
                 {
+                    b.HasOne("ProjetoFinal.Models.Marca", "Marca")
+                        .WithMany("Computadores")
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProjetoFinal.Models.Secao", "Secao")
                         .WithMany("Computadores")
                         .HasForeignKey("SecaoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProjetoFinal.Models.TipoComputador", "TipoComputador")
+                        .WithMany("Computadores")
+                        .HasForeignKey("TipoComputadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Marca");
+
                     b.Navigation("Secao");
+
+                    b.Navigation("TipoComputador");
                 });
 
             modelBuilder.Entity("ProjetoFinal.Models.RegistroManutencao", b =>
@@ -150,12 +212,22 @@ namespace ProjetoFinal.Migrations
                     b.Navigation("Manutencoes");
                 });
 
+            modelBuilder.Entity("ProjetoFinal.Models.Marca", b =>
+                {
+                    b.Navigation("Computadores");
+                });
+
             modelBuilder.Entity("ProjetoFinal.Models.Procedimento", b =>
                 {
                     b.Navigation("registroManutencoes");
                 });
 
             modelBuilder.Entity("ProjetoFinal.Models.Secao", b =>
+                {
+                    b.Navigation("Computadores");
+                });
+
+            modelBuilder.Entity("ProjetoFinal.Models.TipoComputador", b =>
                 {
                     b.Navigation("Computadores");
                 });

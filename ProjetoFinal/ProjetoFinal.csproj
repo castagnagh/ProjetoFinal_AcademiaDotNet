@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
+    <Content Remove="Views\Marcas\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

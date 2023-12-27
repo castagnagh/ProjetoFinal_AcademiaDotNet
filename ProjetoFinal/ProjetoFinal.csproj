@@ -9,6 +9,9 @@
   <ItemGroup>
     <Content Remove="Views\Home\Privacy.cshtml" />
     <Content Remove="Views\Marcas\Details.cshtml" />
+    <Content Remove="Views\Procedimentos\Details.cshtml" />
+    <Content Remove="Views\Secoes\Details.cshtml" />
+    <Content Remove="Views\TipoComputadores\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

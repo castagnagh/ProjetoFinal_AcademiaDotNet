@@ -1,0 +1,128 @@
+﻿@model ProjetoFinal.Models.RegistroManutViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>RegistroManutencao</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div hidden class="form-group">
+                <input id="ComputadorId" asp-for="ComputadorId" class="form-control"/>
+            </div>
+            @* <div hidden class="form-group">
+            <input id="ProcedimentoId" asp-for="ProcedimentoId" class="form-control" />
+            </div> *@
+            <table id="tableComputador" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr Patrimônio
+                        </th>
+                        <th>
+                            Marca
+                        </th>
+                        <th>
+                            Tipo
+                        </th>
+                        <th>
+                            Descrição
+                        </th>
+                        <th>
+                            Seção
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ComputadorList != null)
+                    {
+                        foreach (var item in Model.ComputadorList)
+                        {
+@*                             <tr onclick="passComputador('@item.Id')" data-computador-id="@item.Id" class="computador-row"> *@
+                            <tr onclick="passComputador('@item.Id')">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumPatrimonio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Marca.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoComputador.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descricao)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Secao.Nome)
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="5">Nada para ser exibido.</td></tr>
+                    }
+                </tbody>
+                <input type="hidden" id="selected-computador-id" name="selectedComputadorId" />
+
+            </table>
+            <div class="form-group">
+                <label asp-for="ProcedimentoId" class="control-label"></label>
+                <select asp-for="ProcedimentoId" class="form-control" asp-items="ViewBag.ProcedimentoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataManutencao" class="control-label"></label>
+                <input asp-for="DataManutencao" class="form-control" />
+                <span asp-validation-for="DataManutencao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataPrevisao" class="control-label"></label>
+                <input asp-for="DataPrevisao" class="form-control" />
+                <span asp-validation-for="DataPrevisao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        const table = new DataTable('#tableComputador');
+
+        table.on('click', 'tbody tr', (e) => {
+            let classList = e.currentTarget.classList;
+
+            if (classList.contains('selected')) {
+                classList.remove('selected');
+            }
+            else {
+                table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                classList.add('selected');
+            }
+        });
+
+        document.querySelector('#button').addEventListener('click', function () {
+            table.row('.selected').remove().draw(false);
+        });
+
+        function passComputador(ComputadorId) 
+        {
+            console.log(ComputadorId)
+            document.getElementById('ComputadorId').value = ComputadorId
+        }
+    </script>
+}
+

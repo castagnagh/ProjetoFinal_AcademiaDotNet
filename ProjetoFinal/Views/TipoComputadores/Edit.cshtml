@@ -1,12 +1,12 @@
 ﻿@model ProjetoFinal.Models.TipoComputador
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar tipo";
 }
 
-<h1>Edit</h1>
+<p class="display-6 mt-3">Editar</p>
 
-<h4>TipoComputador</h4>
+<h4>Tipo Computador</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,14 +19,11 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Voltar</a>
+                <input type="submit" value="Salvar" class="btn btn-primary btn-sm" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

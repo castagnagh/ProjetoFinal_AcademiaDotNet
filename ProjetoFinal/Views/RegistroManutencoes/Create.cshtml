@@ -4,73 +4,77 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<p class="display-6 mt-3">Cadastrar Nova Manutenção</p>
 
-<h4>RegistroManutencao</h4>
+<h4>Registros das manutencões realizadas</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div hidden class="form-group">
                 <input id="ComputadorId" asp-for="ComputadorId" class="form-control"/>
             </div>
+            <span asp-validation-for="ComputadorId" class="text-danger"></span>
             @* <div hidden class="form-group">
             <input id="ProcedimentoId" asp-for="ProcedimentoId" class="form-control" />
             </div> *@
-            <table id="tableComputador" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            Nr Patrimônio
-                        </th>
-                        <th>
-                            Marca
-                        </th>
-                        <th>
-                            Tipo
-                        </th>
-                        <th>
-                            Descrição
-                        </th>
-                        <th>
-                            Seção
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.ComputadorList != null)
-                    {
-                        foreach (var item in Model.ComputadorList)
-                        {
-@*                             <tr onclick="passComputador('@item.Id')" data-computador-id="@item.Id" class="computador-row"> *@
-                            <tr onclick="passComputador('@item.Id')">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NumPatrimonio)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Marca.Nome)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoComputador.Nome)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Descricao)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Secao.Nome)
-                                </td>
+            <div class="card">
+                <div class="card-header">Escolha o Computador</div>
+                <div class="card-body">
+                    <table id="tableComputador" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nr Patrimônio
+                                </th>
+                                <th>
+                                    Marca
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Descrição
+                                </th>
+                                <th>
+                                    Seção
+                                </th>
                             </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr><td colspan="5">Nada para ser exibido.</td></tr>
-                    }
-                </tbody>
-                <input type="hidden" id="selected-computador-id" name="selectedComputadorId" />
-
-            </table>
+                        </thead>
+                        <tbody>
+                            @if (Model.ComputadorList != null)
+                            {
+                                foreach (var item in Model.ComputadorList)
+                                {
+                                    @*                          <tr onclick="passComputador('@item.Id')" data-computador-id="@item.Id" class="computador-row"> *@
+                                    <tr onclick="passComputador('@item.Id')">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumPatrimonio)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Marca.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoComputador.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descricao)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Secao.Nome)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="5">Nada para ser exibido.</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="ProcedimentoId" class="control-label"></label>
                 <select asp-for="ProcedimentoId" class="form-control" asp-items="ViewBag.ProcedimentoId"></select>
@@ -120,7 +124,6 @@
 
         function passComputador(ComputadorId) 
         {
-            console.log(ComputadorId)
             document.getElementById('ComputadorId').value = ComputadorId
         }
     </script>

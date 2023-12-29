@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using ProjetoFinal.Data;
 using ProjetoFinal.Models;
 
@@ -68,26 +69,39 @@ namespace ProjetoFinal.Controllers
             return View(viewModel);
         }
 
-        // POST: RegistroManutencoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataManutencao,DataPrevisao,ComputadorId,ProcedimentoId")] RegistroManutencao registroManutencao)
+        public async Task<IActionResult> Create(RegistroManutViewModel registroManutViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(registroManutencao);
-                await _context.SaveChangesAsync();
+                var registroManutencao = new RegistroManutencao
+                {
+                    DataManutencao = registroManutViewModel.DataManutencao,
+                    DataPrevisao = registroManutViewModel.DataPrevisao,
+                    ComputadorId = registroManutViewModel.ComputadorId,
+                    ProcedimentoId = registroManutViewModel.ProcedimentoId
+                };
+
+                // Adiciona o novo RegistroManutencao ao contexto
+                _context.RegistroManutencoes.Add(registroManutencao);
+                await _context.SaveChangesAsync(); // Salva as alterações no banco de dados
+
                 return RedirectToAction(nameof(Index));
             }
-            var viewModel = new RegistroManutViewModel
-            {
-                RegistroManutencao = registroManutencao,
-                ComputadorList = _context.Computadores.ToList(),
-            };
-            ViewData["ComputadorId"] = new SelectList(_context.Computadores, "Id", "Descricao", registroManutencao.ComputadorId);
-            ViewData["ProcedimentoId"] = new SelectList(_context.Procedimentos, "Id", "Descricao", registroManutencao.ProcedimentoId);
 
-            return View(viewModel);
+            // Se houver erros de validação, precisamos reabastecer as listas e devolver a view com o modelo inválido
+            registroManutViewModel.ComputadorList = _context.Computadores
+                .Include(c => c.Marca)
+                .Include(c => c.TipoComputador)
+                .Include(c => c.Secao)
+                .ToList();
+            registroManutViewModel.Marcas = _context.Marca.ToList();
+            registroManutViewModel.TiposComputador = _context.TipoComputador.ToList();
+            registroManutViewModel.Secoes = _context.Secoes.ToList();
+            ViewData["ProcedimentoId"] = new SelectList(_context.Procedimentos, "Id", "Descricao", registroManutViewModel.ProcedimentoId);
+
+            return View(registroManutViewModel);
         }
 
 

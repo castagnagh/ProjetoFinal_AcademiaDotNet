@@ -1,8 +1,30 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ínicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Estatísticas de Manutenção</h2>
+
+<p>Total de Computadores: @ViewBag.TotalComputadores</p>
+<p>Total de Computadores sem Manutenção Registrada: @ViewBag.TotalComputadoresSemManutencao</p>
+<p>Computadores com Manutenção em Dia: @ViewBag.ManutencaoEmDia</p>
+<p>Computadores com Manutenção Vencida: @ViewBag.ManutencaoVencida</p>
+
+<h3>Quantidades de Computadores Precisando de Manutenção nas Seções</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Seção</th>
+            <th>Quantidade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.SecoesComMaisComputadoresSemManutencao)
+        {
+            <tr>
+                <td>@item.Secao.Nome</td>
+                <td>@item.Quantidade</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

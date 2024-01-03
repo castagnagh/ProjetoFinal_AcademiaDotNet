@@ -83,14 +83,12 @@ namespace ProjetoFinal.Controllers
                     ProcedimentoId = registroManutViewModel.ProcedimentoId
                 };
 
-                // Adiciona o novo RegistroManutencao ao contexto
                 _context.RegistroManutencoes.Add(registroManutencao);
-                await _context.SaveChangesAsync(); // Salva as alterações no banco de dados
+                await _context.SaveChangesAsync(); 
 
                 return RedirectToAction(nameof(Index));
             }
 
-            // Se houver erros de validação, precisamos reabastecer as listas e devolver a view com o modelo inválido
             registroManutViewModel.ComputadorList = _context.Computadores
                 .Include(c => c.Marca)
                 .Include(c => c.TipoComputador)
@@ -104,11 +102,10 @@ namespace ProjetoFinal.Controllers
             return View(registroManutViewModel);
         }
 
-
         // GET: RegistroManutencoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.RegistroManutencoes == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -118,9 +115,22 @@ namespace ProjetoFinal.Controllers
             {
                 return NotFound();
             }
-            ViewData["ComputadorId"] = new SelectList(_context.Computadores, "Id", "Descricao", registroManutencao.ComputadorId);
+
+            var viewModel = new RegistroManutViewModel
+            {
+                ComputadorList = _context.Computadores
+                    .Include(c => c.Marca)
+                    .Include(c => c.TipoComputador)
+                    .Include(c => c.Secao)
+                    .ToList(),
+                Marcas = _context.Marca.ToList(),
+                TiposComputador = _context.TipoComputador.ToList(),
+                Secoes = _context.Secoes.ToList(),
+                RegistroManutencao = registroManutencao
+            };
+
             ViewData["ProcedimentoId"] = new SelectList(_context.Procedimentos, "Id", "Descricao", registroManutencao.ProcedimentoId);
-            return View(registroManutencao);
+            return View(viewModel);
         }
 
         // POST: RegistroManutencoes/Edit/5
@@ -128,9 +138,9 @@ namespace ProjetoFinal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataManutencao,DataPrevisao,ComputadorId,ProcedimentoId")] RegistroManutencao registroManutencao)
+        public async Task<IActionResult> Edit(int id, RegistroManutViewModel registroManutViewModel)
         {
-            if (id != registroManutencao.Id)
+            if (id != registroManutViewModel.RegistroManutencao.Id)
             {
                 return NotFound();
             }
@@ -139,12 +149,21 @@ namespace ProjetoFinal.Controllers
             {
                 try
                 {
+                    var registroManutencao = new RegistroManutencao
+                    {
+                        Id = registroManutViewModel.RegistroManutencao.Id,
+                        DataManutencao = registroManutViewModel.DataManutencao,
+                        DataPrevisao = registroManutViewModel.DataPrevisao,
+                        ComputadorId = registroManutViewModel.ComputadorId,
+                        ProcedimentoId = registroManutViewModel.ProcedimentoId
+                    };
+
                     _context.Update(registroManutencao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RegistroManutencaoExists(registroManutencao.Id))
+                    if (!RegistroManutencaoExists(registroManutViewModel.RegistroManutencao.Id))
                     {
                         return NotFound();
                     }
@@ -155,10 +174,20 @@ namespace ProjetoFinal.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComputadorId"] = new SelectList(_context.Computadores, "Id", "Descricao", registroManutencao.ComputadorId);
-            ViewData["ProcedimentoId"] = new SelectList(_context.Procedimentos, "Id", "Descricao", registroManutencao.ProcedimentoId);
-            return View(registroManutencao);
+
+            registroManutViewModel.ComputadorList = _context.Computadores
+                .Include(c => c.Marca)
+                .Include(c => c.TipoComputador)
+                .Include(c => c.Secao)
+                .ToList();
+            registroManutViewModel.Marcas = _context.Marca.ToList();
+            registroManutViewModel.TiposComputador = _context.TipoComputador.ToList();
+            registroManutViewModel.Secoes = _context.Secoes.ToList();
+            ViewData["ProcedimentoId"] = new SelectList(_context.Procedimentos, "Id", "Descricao", registroManutViewModel.ProcedimentoId);
+
+            return View(registroManutViewModel);
         }
+
 
         // GET: RegistroManutencoes/Delete/5
         public async Task<IActionResult> Delete(int? id)

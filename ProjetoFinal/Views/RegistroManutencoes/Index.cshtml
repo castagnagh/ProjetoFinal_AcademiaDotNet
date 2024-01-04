@@ -8,7 +8,10 @@
 <p>
     <a asp-action="Create" class="btn btn-primary btn-sm mt-3"><i class="bi bi-plus-circle"></i> Adicionar</a>
 </p>
-<table class="table">
+<div class="card">
+    <div class="card-header">Lista de Manutenções Realizadas</div>
+    <div class="card-body">
+<table id="myTable" class="table">
     <thead>
         <tr>
             <th>
@@ -60,3 +63,14 @@
         }
     </tbody>
 </table>
+</div>
+</div>
+@section Scripts {
+    <script>
+        let table = new DataTable('#myTable', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+            },
+        });
+    </script>
+}

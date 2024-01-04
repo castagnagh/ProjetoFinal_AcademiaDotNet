@@ -6,33 +6,38 @@
 
 <p class="display-6 mt-3">Marcas de computadores registradas</p>
 <p>
-    <a asp-action="Create" class="btn btn-success btn-sm mt-3"><i class="bi bi-plus-circle"></i> Adicionar</a>
+    <a asp-action="Create" class="btn btn-primary btn-sm mt-3"><i class="bi bi-plus-circle"></i> Adicionar</a>
 </p>
-<table id="myTable" class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i> Editar</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a>
-                </td>
-        </tr>
-}
-    </tbody>
-</table>
-
-@* @section Scripts {
+<div class="card">
+    <div class="card-header">Lista de Marcas</div>
+    <div class="card-body">
+        <table id="myTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i> Editar</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
     <script>
         let table = new DataTable('#myTable', {
             language: {
@@ -40,4 +45,4 @@
             },
         });
     </script>
-} *@
+}

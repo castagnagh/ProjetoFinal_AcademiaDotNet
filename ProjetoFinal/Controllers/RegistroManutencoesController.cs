@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
+
     public class RegistroManutencoesController : Controller
     {
         private readonly Contexto _context;
@@ -21,14 +24,14 @@ namespace ProjetoFinal.Controllers
             _context = context;
         }
 
-        // GET: RegistroManutencoes
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var contexto = _context.RegistroManutencoes.Include(r => r.Computador).Include(r => r.Procedimento);
             return View(await contexto.ToListAsync());
         }
 
-        // GET: RegistroManutencoes/Details/5
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.RegistroManutencoes == null)
@@ -48,7 +51,7 @@ namespace ProjetoFinal.Controllers
             return View(registroManutencao);
         }
 
-        // GET: RegistroManutencoes/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             var viewModel = new RegistroManutViewModel
@@ -68,6 +71,8 @@ namespace ProjetoFinal.Controllers
 
             return View(viewModel);
         }
+
+        [Authorize(Roles = "User, Admin")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -102,7 +107,8 @@ namespace ProjetoFinal.Controllers
             return View(registroManutViewModel);
         }
 
-        // GET: RegistroManutencoes/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -133,9 +139,7 @@ namespace ProjetoFinal.Controllers
             return View(viewModel);
         }
 
-        // POST: RegistroManutencoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, RegistroManutViewModel registroManutViewModel)
@@ -189,7 +193,7 @@ namespace ProjetoFinal.Controllers
         }
 
 
-        // GET: RegistroManutencoes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.RegistroManutencoes == null)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetoFinal.Data;
 using ProjetoFinal.Models;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly Contexto _context;

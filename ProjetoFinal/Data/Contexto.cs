@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjetoFinal.Models;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
 namespace ProjetoFinal.Data
 {
-    public class Contexto : DbContext
+    public class Contexto : IdentityDbContext
     {
         public DbSet<Secao> Secoes { get; set; }
         public DbSet<Procedimento> Procedimentos { get; set; }
@@ -15,6 +17,8 @@ namespace ProjetoFinal.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Computador>()
                .HasOne(c => c.Secao)
                .WithMany(s => s.Computadores)

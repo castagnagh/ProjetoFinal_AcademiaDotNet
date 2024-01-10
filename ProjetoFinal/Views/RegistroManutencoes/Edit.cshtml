@@ -3,7 +3,7 @@
     ViewData["Title"] = "Editar manutenção";
 }
 
-<h1>Edit</h1>
+<p class="display-6 mt-3">Editar</p>
 
 <h4>Registros de Manutenções</h4>
 <hr />
@@ -12,7 +12,7 @@
         <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input id="ComputadorId" asp-for="ComputadorId" class="form-control" />
+                <input type="hidden" id="ComputadorId" asp-for="ComputadorId" class="form-control" />
                 <span asp-validation-for="ComputadorId" class="text-danger"></span>
             </div>
 
@@ -73,19 +73,19 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="ProcedimentoId" class="control-label"></label>
+                <label asp-for="ProcedimentoId" class="control-label">Procedimento</label>
                 @Html.DropDownListFor(model => model.ProcedimentoId, (SelectList)ViewBag.ProcedimentoId, "Selecione um procedimento", new { @class = "form-control" })
                 <span asp-validation-for="ProcedimentoId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="DataManutencao" class="control-label"></label>
+                <label asp-for="DataManutencao" class="control-label">Data de manutenção</label>
                 <input asp-for="DataManutencao" class="form-control" />
                 <span asp-validation-for="DataManutencao" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="DataPrevisao" class="control-label"></label>
+                <label asp-for="DataPrevisao" class="control-label">Data Previsão de uma nova manutenção</label>
                 <input asp-for="DataPrevisao" class="form-control" />
                 <span asp-validation-for="DataPrevisao" class="text-danger"></span>
             </div>

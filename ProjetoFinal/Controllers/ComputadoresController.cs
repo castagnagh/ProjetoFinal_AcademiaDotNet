@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class ComputadoresController : Controller
     {
         private readonly Contexto _context;
@@ -18,15 +20,13 @@ namespace ProjetoFinal.Controllers
         {
             _context = context;
         }
-
-        // GET: Computadores
         public async Task<IActionResult> Index()
         {
             var contexto = _context.Computadores.Include(c => c.Marca).Include(c => c.Secao).Include(c => c.TipoComputador);
             return View(await contexto.ToListAsync());
         }
 
-        // GET: Computadores/Details/5
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Computadores == null)
@@ -46,8 +46,7 @@ namespace ProjetoFinal.Controllers
 
             return View(computador);
         }
-
-        // GET: Computadores/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             ViewData["MarcaId"] = new SelectList(_context.Set<Marca>(), "Id", "Nome");
@@ -56,9 +55,7 @@ namespace ProjetoFinal.Controllers
             return View();
         }
 
-        // POST: Computadores/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NumPatrimonio,Descricao,SecaoId,MarcaId,TipoComputadorId")] Computador computador)
@@ -75,7 +72,7 @@ namespace ProjetoFinal.Controllers
             return View(computador);
         }
 
-        // GET: Computadores/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Computadores == null)
@@ -94,9 +91,7 @@ namespace ProjetoFinal.Controllers
             return View(computador);
         }
 
-        // POST: Computadores/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NumPatrimonio,Descricao,SecaoId,MarcaId,TipoComputadorId")] Computador computador)
@@ -132,7 +127,7 @@ namespace ProjetoFinal.Controllers
             return View(computador);
         }
 
-        // GET: Computadores/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Computadores == null)
@@ -153,7 +148,7 @@ namespace ProjetoFinal.Controllers
             return View(computador);
         }
 
-        // POST: Computadores/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

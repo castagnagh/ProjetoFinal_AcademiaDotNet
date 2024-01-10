@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class TipoComputadoresController : Controller
     {
         private readonly Contexto _context;
@@ -19,7 +21,6 @@ namespace ProjetoFinal.Controllers
             _context = context;
         }
 
-        // GET: TipoComputadores
         public async Task<IActionResult> Index()
         {
               return _context.TipoComputador != null ? 
@@ -27,7 +28,7 @@ namespace ProjetoFinal.Controllers
                           Problem("Entity set 'Contexto.TipoComputador'  is null.");
         }
 
-        // GET: TipoComputadores/Details/5
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.TipoComputador == null)
@@ -45,15 +46,13 @@ namespace ProjetoFinal.Controllers
             return View(tipoComputador);
         }
 
-        // GET: TipoComputadores/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TipoComputadores/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome")] TipoComputador tipoComputador)
@@ -67,7 +66,7 @@ namespace ProjetoFinal.Controllers
             return View(tipoComputador);
         }
 
-        // GET: TipoComputadores/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.TipoComputador == null)
@@ -83,9 +82,7 @@ namespace ProjetoFinal.Controllers
             return View(tipoComputador);
         }
 
-        // POST: TipoComputadores/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] TipoComputador tipoComputador)
@@ -118,7 +115,7 @@ namespace ProjetoFinal.Controllers
             return View(tipoComputador);
         }
 
-        // GET: TipoComputadores/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.TipoComputador == null)
@@ -136,7 +133,7 @@ namespace ProjetoFinal.Controllers
             return View(tipoComputador);
         }
 
-        // POST: TipoComputadores/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

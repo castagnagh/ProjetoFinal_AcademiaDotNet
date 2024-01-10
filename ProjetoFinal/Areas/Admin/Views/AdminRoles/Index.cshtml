@@ -3,18 +3,19 @@
     ViewData["Title"] = "Permissões";
 }
 
-<h1 class="bg-info text-white">Permissões</h1>
-<a asp-action="Create" class="btn btn-secondary">Criar Role</a>
+<p class="display-6 mt-3">Roles</p>
+
+<a asp-action="Create" class="btn btn-primary my-3">Cadastrar Role</a>
 
 <table class="table table-small table-bordered">
-    <tr><th>ID</th><th>Nome</th></tr>
+    <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
     @foreach(var role in Model)
     {
         <tr>
             <td>@role.Id</td>
             <td>@role.Name</td>
             <td i-role="@role.Id"></td>
-            <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Editar</a></td>
+            <td><a class="btn btn-sm btn-secondary" asp-action="Update" asp-route-id="@role.Id">Editar</a></td>
             <td>
                 <form asp-action="Delete" asp-route-id="@role.Id" method="get">
                     <button type="submit" class="btn btn-sm btn-danger">

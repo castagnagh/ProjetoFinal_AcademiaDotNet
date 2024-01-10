@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -19,13 +20,13 @@ namespace ProjetoFinal.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class SecoesController : Controller
     {
         private readonly Contexto _context;
@@ -18,16 +20,14 @@ namespace ProjetoFinal.Controllers
         {
             _context = context;
         }
-
-        // GET: Secoes
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Index()
         {
               return _context.Secoes != null ? 
                           View(await _context.Secoes.ToListAsync()) :
                           Problem("Entity set 'Contexto.Secoes'  is null.");
         }
-
-        // GET: Secoes/Details/5
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Secoes == null)
@@ -45,15 +45,13 @@ namespace ProjetoFinal.Controllers
             return View(secao);
         }
 
-        // GET: Secoes/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Secoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome")] Secao secao)
@@ -67,7 +65,7 @@ namespace ProjetoFinal.Controllers
             return View(secao);
         }
 
-        // GET: Secoes/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Secoes == null)
@@ -83,9 +81,7 @@ namespace ProjetoFinal.Controllers
             return View(secao);
         }
 
-        // POST: Secoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Secao secao)
@@ -118,7 +114,7 @@ namespace ProjetoFinal.Controllers
             return View(secao);
         }
 
-        // GET: Secoes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Secoes == null)
@@ -136,7 +132,7 @@ namespace ProjetoFinal.Controllers
             return View(secao);
         }
 
-        // POST: Secoes/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class MarcasController : Controller
     {
         private readonly Contexto _context;
@@ -19,7 +21,7 @@ namespace ProjetoFinal.Controllers
             _context = context;
         }
 
-        // GET: Marcas
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Index()
         {
               return _context.Marca != null ? 
@@ -27,7 +29,7 @@ namespace ProjetoFinal.Controllers
                           Problem("Entity set 'Contexto.Marca'  is null.");
         }
 
-        // GET: Marcas/Details/5
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Marca == null)
@@ -45,15 +47,13 @@ namespace ProjetoFinal.Controllers
             return View(marca);
         }
 
-        // GET: Marcas/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Marcas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome")] Marca marca)
@@ -67,7 +67,7 @@ namespace ProjetoFinal.Controllers
             return View(marca);
         }
 
-        // GET: Marcas/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Marca == null)
@@ -83,9 +83,7 @@ namespace ProjetoFinal.Controllers
             return View(marca);
         }
 
-        // POST: Marcas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Marca marca)
@@ -118,7 +116,7 @@ namespace ProjetoFinal.Controllers
             return View(marca);
         }
 
-        // GET: Marcas/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Marca == null)
@@ -136,7 +134,7 @@ namespace ProjetoFinal.Controllers
             return View(marca);
         }
 
-        // POST: Marcas/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

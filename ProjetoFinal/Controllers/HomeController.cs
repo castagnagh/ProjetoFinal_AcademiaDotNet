@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly Contexto _context;

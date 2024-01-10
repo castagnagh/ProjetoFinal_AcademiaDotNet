@@ -14,7 +14,6 @@ using ProjetoFinal.Models;
 namespace ProjetoFinal.Controllers
 {
     [Authorize]
-
     public class RegistroManutencoesController : Controller
     {
         private readonly Contexto _context;
@@ -24,7 +23,6 @@ namespace ProjetoFinal.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var contexto = _context.RegistroManutencoes.Include(r => r.Computador).Include(r => r.Procedimento);
@@ -213,7 +211,7 @@ namespace ProjetoFinal.Controllers
             return View(registroManutencao);
         }
 
-        // POST: RegistroManutencoes/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

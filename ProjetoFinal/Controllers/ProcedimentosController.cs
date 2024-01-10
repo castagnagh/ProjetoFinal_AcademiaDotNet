@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ProjetoFinal.Models;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class ProcedimentosController : Controller
     {
         private readonly Contexto _context;
@@ -19,7 +21,7 @@ namespace ProjetoFinal.Controllers
             _context = context;
         }
 
-        // GET: Procedimentos
+        
         public async Task<IActionResult> Index()
         {
               return _context.Procedimentos != null ? 
@@ -27,7 +29,7 @@ namespace ProjetoFinal.Controllers
                           Problem("Entity set 'Contexto.Procedimentos'  is null.");
         }
 
-        // GET: Procedimentos/Details/5
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Procedimentos == null)
@@ -45,15 +47,13 @@ namespace ProjetoFinal.Controllers
             return View(procedimento);
         }
 
-        // GET: Procedimentos/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Procedimentos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Descricao")] Procedimento procedimento)
@@ -67,7 +67,7 @@ namespace ProjetoFinal.Controllers
             return View(procedimento);
         }
 
-        // GET: Procedimentos/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Procedimentos == null)
@@ -83,9 +83,7 @@ namespace ProjetoFinal.Controllers
             return View(procedimento);
         }
 
-        // POST: Procedimentos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Descricao")] Procedimento procedimento)
@@ -118,7 +116,7 @@ namespace ProjetoFinal.Controllers
             return View(procedimento);
         }
 
-        // GET: Procedimentos/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Procedimentos == null)
@@ -136,7 +134,7 @@ namespace ProjetoFinal.Controllers
             return View(procedimento);
         }
 
-        // POST: Procedimentos/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

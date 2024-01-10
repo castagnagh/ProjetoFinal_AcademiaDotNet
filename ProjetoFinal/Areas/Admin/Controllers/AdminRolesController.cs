@@ -7,8 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjetoFinal.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    
     public class AdminRolesController : Controller
     {
         private RoleManager<IdentityRole> _roleManager;

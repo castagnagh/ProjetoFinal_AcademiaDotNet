@@ -3,13 +3,15 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <ul class="nav-item">
-        <form method="post" asp-controller="account" asp-action="logout">
-            <button type="submit" style="width:auto"
-            class="nav-link btn btn-link py-0">
-                Sair @User.Identity.Name
-            </button>
-        </form>
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-link d-flex align-items-center gap-2">
+            <form method="post" asp-area="" asp-controller="account" asp-action="logout">
+                <button type="submit" style="width:auto"
+                        class="nav-link btn btn-link py-0">
+                    <svg class="bi"><use xlink:href="#door-closed" /></svg> Sair @User.Identity.Name
+                </button>
+            </form>
+        </li>
     </ul>
 }
 else

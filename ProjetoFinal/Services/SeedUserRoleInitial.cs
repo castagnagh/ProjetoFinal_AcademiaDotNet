@@ -49,7 +49,7 @@ namespace ProjetoFinal.Services
                 user.LockoutEnabled = false;
                 user.SecurityStamp = Guid.NewGuid().ToString();
                 
-                IdentityResult result = await _userManager.CreateAsync(user, "usuario");
+                IdentityResult result = await _userManager.CreateAsync(user, "Usuario123!");
 
                 if (!result.Succeeded)
                 {
@@ -68,11 +68,11 @@ namespace ProjetoFinal.Services
                 user.LockoutEnabled = false;
                 user.SecurityStamp = Guid.NewGuid().ToString();
 
-                IdentityResult result = await _userManager.CreateAsync(user, "admin");
+                IdentityResult result = await _userManager.CreateAsync(user, "Admin123!");
 
                 if (!result.Succeeded)
                 {
-                    await _userManager.CreateAsync(user, "User");
+                    await _userManager.CreateAsync(user, "Admin");
                 }
             }
         }

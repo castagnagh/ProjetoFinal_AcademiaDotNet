@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProjetoFinal.Areas.Admin.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjetoFinal.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    
     public class AdminRolesController : Controller
     {
         private RoleManager<IdentityRole> _roleManager;
@@ -20,7 +21,7 @@ namespace ProjetoFinal.Areas.Admin.Controllers
         }
 
         public ViewResult Index() => View(_roleManager.Roles);
-
+        [HttpGet]
         public IActionResult Create() => View();
 
         [HttpPost]
@@ -38,16 +39,17 @@ namespace ProjetoFinal.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(string id){
+        public async Task<IActionResult> Update(string id)
+        {
             IdentityRole role = await _roleManager.FindByIdAsync(id);
 
             List<IdentityUser> members = new List<IdentityUser>();
             List<IdentityUser> nonMembers = new List<IdentityUser>();
 
-            foreach(IdentityUser user in _userManager.Users)
+            List<IdentityUser> users = await _userManager.Users.ToListAsync();
+            foreach (IdentityUser user in users)
             {
-                var list = await _userManager.IsInRoleAsync(user, role.Name) 
-                                                    ? members : nonMembers;
+                var list = await _userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
                 list.Add(user);
             }
 

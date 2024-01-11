@@ -32,11 +32,11 @@ namespace ProjetoFinal.Controllers
                 .Count();
 
             int manutencaoVencida = _context.Computadores
-                .Where(c => c.Manutencoes.Any() && !c.Manutencoes.Any(m => m.DataManutencao.AddMonths(6) > dataAtual))
+                .Where(c => c.Manutencoes.Any() && !c.Manutencoes.Any(m => m.DataPrevisao > dataAtual))
                 .Count();
 
             var secoesComMaisComputadoresSemManutencao = _context.Computadores
-                .Where(c => c.Manutencoes.Any(m => m.DataManutencao.AddMonths(6) < dataAtual))
+                .Where(c => c.Manutencoes.Any(m => m.DataPrevisao < dataAtual))
                 .GroupBy(c => c.SecaoId)
                 .Select(g => new
                 {

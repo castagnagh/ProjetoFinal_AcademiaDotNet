@@ -51,9 +51,9 @@ namespace ProjetoFinal.Services
                 
                 IdentityResult result = await _userManager.CreateAsync(user, "Usuario123!");
 
-                if (!result.Succeeded)
+                if (result.Succeeded)
                 {
-                    await _userManager.CreateAsync(user, "User");
+                    await _userManager.AddToRoleAsync(user, "User");
                 }
             }
 
@@ -70,9 +70,9 @@ namespace ProjetoFinal.Services
 
                 IdentityResult result = await _userManager.CreateAsync(user, "Admin123!");
 
-                if (!result.Succeeded)
+                if (result.Succeeded)
                 {
-                    await _userManager.CreateAsync(user, "Admin");
+                    await _userManager.AddToRoleAsync(user, "Admin");
                 }
             }
         }

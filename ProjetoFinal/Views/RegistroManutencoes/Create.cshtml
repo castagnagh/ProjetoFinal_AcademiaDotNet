@@ -13,7 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div hidden class="form-group">
-                <input id="ComputadorId" asp-for="ComputadorId" class="form-control"/>
+                <input id="ComputadorId" asp-for="ComputadorId" class="form-control" />
             </div>
             <span asp-validation-for="ComputadorId" class="text-danger"></span>
             @* <div hidden class="form-group">
@@ -98,7 +98,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script>
         const table = new DataTable('#tableComputador', {
@@ -123,10 +125,8 @@
             table.row('.selected').remove().draw(false);
         });
 
-        function passComputador(ComputadorId) 
-        {
+        function passComputador(ComputadorId) {
             document.getElementById('ComputadorId').value = ComputadorId
         }
     </script>
 }
-

@@ -191,6 +191,7 @@ namespace ProjetoFinal.Controllers
         }
 
 
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
